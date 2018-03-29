@@ -12,8 +12,8 @@ const Navbar = ({selectedSub, handleMenuChange, handleRefreshClick}) => (
             <Menu.Item name='programming' active={selectedSub === 'programming'} onClick={handleMenuChange} />
             <Menu.Item name='learn javascript' active={selectedSub === 'learnjavascript'} onClick={handleMenuChange} />
             <Menu.Menu position='right'>
-                <Menu.Item onClick={() => console.log('refresh')}><Icon name='refresh'/></Menu.Item>
-                <Menu.Item onClick={() => handleRefreshClick()}><Icon name='info circle'/></Menu.Item>
+                <Menu.Item onClick={() => handleRefreshClick()}><Icon name='refresh' /></Menu.Item>
+                <Menu.Item href="http://github.com/ajayns/" target="_blank"><Icon name='github' size="large" /></Menu.Item>
             </Menu.Menu>
         </Menu>
     </div>

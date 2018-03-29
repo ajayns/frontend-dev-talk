@@ -12,12 +12,15 @@ import {
 import Navbar from '../components/Navbar'
 import Posts from './Posts'
 
+import { Dimmer, Loader } from 'semantic-ui-react'
+
 
 class App extends Component {
     constructor(props) {
         super(props)
 
         this.handleMenuChange = this.handleMenuChange.bind(this)
+        this.handleRefreshClick = this.handleRefreshClick.bind(this)
     }
 
     componentDidMount() {
@@ -26,11 +29,15 @@ class App extends Component {
     }
 
     handleMenuChange(e, { name }) {
-        this.props.dispatch(selectSubreddit(name.replace(/ /g, '')))
+        const sub = name.replace(/ /g, '')
+        this.props.dispatch(selectSubreddit(sub))
+        this.props.dispatch(fetchPostsIfNeeded(sub))
     }
 
     handleRefreshClick() {
-        console.log('refresh clicked')
+        const { dispatch, selectedSubreddit } = this.props
+        dispatch(invalidateSubreddit(selectedSubreddit))
+        dispatch(fetchPostsIfNeeded(selectedSubreddit))
     }
 
     render() {
@@ -38,6 +45,9 @@ class App extends Component {
 
         return (
             <div>
+                <Dimmer blurring active={isFetching}>
+                    <Loader>Loading</Loader>
+                </Dimmer>
                 <Navbar
                     selectedSub={selectedSubreddit} 
                     handleMenuChange={this.handleMenuChange}
