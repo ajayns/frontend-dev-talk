@@ -8,7 +8,9 @@ import {
     invalidateSubreddit
 } from '../actions'
 
+// Import components
 import Navbar from '../components/Navbar'
+import Posts from './Posts'
 
 
 class App extends Component {
@@ -18,7 +20,12 @@ class App extends Component {
         this.handleMenuChange = this.handleMenuChange.bind(this)
     }
 
-    handleMenuChange(e, {name}) {
+    componentDidMount() {
+        const { dispatch, selectedSubreddit } = this.props
+        dispatch(fetchPostsIfNeeded(selectedSubreddit))
+    }
+
+    handleMenuChange(e, { name }) {
         this.props.dispatch(selectSubreddit(name.replace(/ /g, '')))
     }
 
@@ -27,7 +34,7 @@ class App extends Component {
     }
 
     render() {
-        const { selectedSubreddit } = this.props
+        const { selectedSubreddit, posts, isFetching } = this.props
 
         return (
             <div>
@@ -36,16 +43,22 @@ class App extends Component {
                     handleMenuChange={this.handleMenuChange}
                     handleRefreshClick={this.handleRefreshClick}
                 />
+                {posts.length > 0 &&
+                    <Posts posts={posts} />
+                }
             </div>
         )
     }
 }
 
 function mapStateToProps(state) {
-    const { selectedSubreddit } = state
+    const { selectedSubreddit, postsBySubreddit } = state
+    const { isFetching, items: posts } = postsBySubreddit[selectedSubreddit] || { isFetching: true, items: [] }
 
     return {
-        selectedSubreddit
+        selectedSubreddit,
+        posts,
+        isFetching
     }
 }
 

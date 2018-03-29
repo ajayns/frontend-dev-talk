@@ -13,7 +13,7 @@ const Navbar = ({selectedSub, handleMenuChange, handleRefreshClick}) => (
             <Menu.Item name='learn javascript' active={selectedSub === 'learnjavascript'} onClick={handleMenuChange} />
             <Menu.Menu position='right'>
                 <Menu.Item onClick={() => console.log('refresh')}><Icon name='refresh'/></Menu.Item>
-                <Menu.Item onClick={() => console.log('author')}><Icon name='info circle'/></Menu.Item>
+                <Menu.Item onClick={() => handleRefreshClick()}><Icon name='info circle'/></Menu.Item>
             </Menu.Menu>
         </Menu>
     </div>
