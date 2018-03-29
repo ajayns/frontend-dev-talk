@@ -19,7 +19,6 @@ class App extends Component {
     }
 
     handleMenuChange(e, {name}) {
-        console.log(name)
         this.props.dispatch(selectSubreddit(name.replace(/ /g, '')))
     }
 
